@@ -1,8 +1,14 @@
 <div>
-    <component v-for="field in fields | orderBy 'priority'" track-by="id"
-               :is="field.type"
-               :field="field"
-               :model="model"
-               :is-admin="isAdmin"
-               :form="form"></component>
+    <div  v-for="field in fields | orderBy 'priority'">
+        <component v-if="field.page === currentPage" track-by="id"
+                :is="field.type"
+                :field="field"
+                :model="model"
+                :is-admin="isAdmin"
+                :form="form"></component>
+    </div>
+    <div class="uk-form-controls">
+        <button v-if="window.$formmaker.currentPage > 0" @click.prevent="window.$formmaker.back()">{{ "Back" | trans }}</button>
+        <button v-if="window.$formmaker.currentPage < window.$formmaker.maxPage" @click.prevent="window.$formmaker.forth()">{{ "Forth" | trans }}</button>
+    </div>
 </div>
